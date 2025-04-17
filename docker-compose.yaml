@@ -123,7 +123,7 @@ services:
 
   chromadb:
     restart: unless-stopped
-    image: ghcr.io/chroma-core/chroma:latest
+    image: ghcr.io/chroma-core/chroma:0.6.3
     volumes:
       - chromadb:/chroma/chroma
     networks:
