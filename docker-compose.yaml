@@ -1,6 +1,6 @@
 networks:
-  sermas_dev:
-    name: sermas_dev
+  vipp_dev:
+    name: vipp_dev
 
 services:
 
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./config/proxy:/etc/caddy
     networks:
-      - sermas_dev
+      - vipp_dev
     ports:
       - 8080:8080
 
@@ -33,7 +33,7 @@ services:
       keycloak:
         condition: service_healthy
     networks:
-      - sermas_dev
+      - vipp_dev
     environment:
       - ENV_PATH=/config/.env
       - CONFIG_BASEPATH=/config
@@ -46,12 +46,12 @@ services:
     depends_on:
       - api
     networks:
-      - sermas_dev
+      - vipp_dev
 
   cli:
     image: ghcr.io/sermas-eu/cli:dev
     networks:
-      - sermas_dev
+      - vipp_dev
     environment:
       - CONFIG_DIR=/data
     volumes:
@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
     image: ghcr.io/sermas-eu/speechbrain:dev
     networks:
-      - sermas_dev
+      - vipp_dev
     volumes:
       - ./data/cache:/cache
       - ./config/speechbrain:/app/config
@@ -70,7 +70,7 @@ services:
   mqtt:
     image: iegomez/mosquitto-go-auth:latest
     networks:
-      - sermas_dev
+      - vipp_dev
     volumes:
       - ./config/mqtt:/etc/mosquitto
     depends_on:
@@ -104,7 +104,7 @@ services:
       # - KC_HOSTNAME_STRICT=false
       # - KC_HOSTNAME_STRICT_BACKCHANNEL=true
     networks:
-      - sermas_dev
+      - vipp_dev
     volumes:
       - keycloak:/opt/keycloak/data
     healthcheck:
@@ -117,7 +117,7 @@ services:
     restart: unless-stopped
     image: mongo
     networks:
-      - sermas_dev
+      - vipp_dev
     volumes:
       - mongodb:/data/db
 
@@ -127,7 +127,7 @@ services:
     volumes:
       - chromadb:/chroma/chroma
     networks:
-      - sermas_dev
+      - vipp_dev
 
   redis:
     restart: unless-stopped
@@ -135,7 +135,7 @@ services:
     volumes:
       - redis:/data
     networks:
-      - sermas_dev
+      - vipp_dev
 
   minio:
     restart: unless-stopped
@@ -146,7 +146,7 @@ services:
       MINIO_ROOT_PASSWORD: minioadmin
       MINIO_BROWSER_REDIRECT_URL: http://localhost:8080/minio-admin
     networks:
-      - sermas_dev
+      - vipp_dev
     healthcheck:
       test: [ "CMD", "mc", "ready", "local" ]
       interval: 5s
