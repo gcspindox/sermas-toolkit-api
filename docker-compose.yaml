@@ -16,7 +16,7 @@ services:
 
   api:
     restart: unless-stopped
-    image: ghcr.io/sermas-eu/api:dev    
+    image: ghcr.io/gcspindox/api:dev    
     depends_on:
       proxy:
         condition: service_started
@@ -42,14 +42,14 @@ services:
 
   kiosk:
     restart: unless-stopped
-    image: ghcr.io/sermas-eu/kiosk:dev
+    image: ghcr.io/gcspindox/kiosk:dev
     depends_on:
       - api
     networks:
       - vipp_dev
 
   cli:
-    image: ghcr.io/sermas-eu/cli:dev
+    image: ghcr.io/gcspindox/cli:dev
     networks:
       - vipp_dev
     environment:
@@ -60,7 +60,7 @@ services:
 
   speechbrain:
     restart: unless-stopped
-    image: ghcr.io/sermas-eu/speechbrain:dev
+    image: ghcr.io/gcspindox/speechbrain:dev
     networks:
       - vipp_dev
     volumes:
